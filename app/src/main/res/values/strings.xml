@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">HapusPlant</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="registerLink">Don\'t have an account? <b><u>Register</u></b></string>
+    <string name="forgotLink"><b>Forgot Password?</b></string>
+    <string name="applogo">AppLogo</string>
+    <string name="login">Login</string>
+    <string name="signupTitle">Sign Up on\nHapus Plant</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="profile_photo">Profile Photo</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="register">Register</string>
+    <string name="dateformat">%1$d/%2$d/%3$d</string>
+    <string name="succulentimage">succulentImage</string>
+    <string name="prueba">Prueba</string>
+    <string name="isEndemic">IsEndemic?</string>
+    <string name="hasDocuments">Has Pappers?</string>
+</resources>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="#000000"
+                android:paddingVertical="30dp"
+                android:fontFamily="@font/poppins_black"
+                android:textAlignment="center"
+                android:text="@string/signupTitle" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/username"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:autofillHints="username"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPersonName"
+                android:labelFor="@id/tvUsername"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/password"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:autofillHints="password"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPassword"
+                android:labelFor="@id/tvUsername"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvRepeatPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/repeat_password"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etRepeatPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:autofillHints="password"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPassword"
+                android:labelFor="@id/tvUsername"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/first_name"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:autofillHints="name"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPersonName"
+                android:labelFor="@id/tvName"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvLastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/last_name"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:autofillHints="name"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPersonName"
+                android:labelFor="@id/tvLastName"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvBirthdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/birthdate"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etBirthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="text"
+                android:focusable="false"
+                android:clickable="true"
+                android:labelFor="@id/tvBirthdate"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck"
+                android:importantForAutofill="no" />
+
+            <TextView
+                android:id="@+id/tvProfilePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/profile_photo"
+                android:textSize="20sp"/>
+
+            <ImageButton
+                android:id="@+id/btnProfilePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#DCDCDC"
+                android:ems="10"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType=""
+                android:labelFor="@id/tvProfilePhoto"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                android:src="@drawable/ic_camera"
+                tools:ignore="LabelFor,VisualLintTextFieldSize,SpeakableTextPresentCheck"
+                android:contentDescription="@string/profile_photo" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingHorizontal="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/register"
+                android:background="@drawable/rounded"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"/>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
