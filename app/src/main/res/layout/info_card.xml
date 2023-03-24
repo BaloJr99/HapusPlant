@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/rounder_border"
     android:layout_height="wrap_content"
@@ -29,7 +29,8 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/prueba"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins_semibold"/>
@@ -38,13 +39,15 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_edit"
-                android:background="@drawable/rounded_small"/>
+                android:background="@drawable/rounded_small"
+                android:contentDescription="@string/edit_button" />
 
             <ImageButton
                 android:layout_marginStart="5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_delete"
+                android:contentDescription="@string/delete_button"
                 android:background="@drawable/rounded_small"/>
         </LinearLayout>
 
@@ -61,8 +64,10 @@
                 android:fontFamily="@font/poppins_regular"/>
 
             <Switch
+                android:track="@drawable/bg_track"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="40dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
 
@@ -80,20 +85,24 @@
                 android:fontFamily="@font/poppins_regular"/>
 
             <Switch
+                android:track="@drawable/bg_track"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/rounded_small"
+                android:contentDescription="@string/download_button"
                 android:src="@drawable/ic_download"/>
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
             android:text="@string/prueba"
             android:fontFamily="@font/poppins_regular"/>
     </LinearLayout>
