@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import java.util.Date;
+
 public class HapusPlantLiteDb extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "HapusPlantLite.db";
@@ -33,11 +38,15 @@ public class HapusPlantLiteDb extends SQLiteOpenHelper {
     public String getJwtIfExists(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor c = sqLiteDatabase.query("user", null, null, null, null, null, null);
+        String token = "";
         if(c.getCount() > 0){
             c.moveToFirst();
-            return c.getString(0);
+            token = c.getString(0);
+            DecodedJWT jwt = JWT.decode(token);
+            if(jwt.getExpiresAt().before(new Date()))
+                token = "";
         }
-        return "";
+        return token;
     }
 
     public void insertJwt(String token){
