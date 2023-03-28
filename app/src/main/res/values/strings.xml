@@ -21,4 +21,9 @@
     <string name="edit_button">Edit Button</string>
     <string name="delete_button">Delete Button</string>
     <string name="download_button">Download Button</string>
+    <string name="home">Home</string>
+    <string name="my_gallery">My Gallery</string>
+    <string name="other_s_collections">Other\'s collections</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
 </resources>
