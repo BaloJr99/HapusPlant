@@ -1,9 +1,11 @@
 package com.example.hapusplant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+    HapusPlantLiteDb hapusPlantLiteDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,17 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_collection, R.id.nav_profile)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_collection, R.id.nav_profile, R.id.nav_close)
                 .setOpenableLayout(drawer)
                 .build();
+        navigationView.getMenu().findItem(R.id.nav_close).setOnMenuItemClickListener(menuItem -> {
+            hapusPlantLiteDb = new HapusPlantLiteDb(this);
+            hapusPlantLiteDb.deleteJwt();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        });
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

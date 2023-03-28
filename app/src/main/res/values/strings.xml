@@ -26,4 +26,5 @@
     <string name="other_s_collections">Other\'s collections</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 </resources>
