@@ -67,10 +67,10 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         UserAPI userAPI = retrofit.create(UserAPI.class);
-        Call<UserModel> call = userAPI.login(new UserModel(etUsername.getText().toString(), etPassword.getText().toString()));
-        call.enqueue(new Callback<UserModel>() {
+        Call<Void> call = userAPI.login(new UserModel(etUsername.getText().toString(), etPassword.getText().toString()));
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<UserModel> call, @NonNull Response<UserModel> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 try {
                     if(response.isSuccessful()){
                         try {
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
             }
         });

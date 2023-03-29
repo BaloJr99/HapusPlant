@@ -29,6 +29,13 @@ public class UserModel {
     public UserModel(String username, String password) {
         this.username = username;
         this.password = password;
+        this.role = role;
+    }
+    public UserModel(String username, String password, String role, Boolean isActive) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.isActive = isActive;
     }
 
     public String getIdUser() {

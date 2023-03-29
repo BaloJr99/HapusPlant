@@ -13,7 +13,7 @@
     <string name="profile_photo">Profile Photo</string>
     <string name="birthdate">Birthdate</string>
     <string name="register">Register</string>
-    <string name="dateformat">%1$d/%2$d/%3$d</string>
+    <string name="dateformat">%1$d-%2$d-%3$d</string>
     <string name="succulentimage">succulentImage</string>
     <string name="prueba">Prueba</string>
     <string name="isEndemic">IsEndemic?</string>
