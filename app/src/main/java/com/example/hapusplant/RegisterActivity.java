@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
@@ -42,7 +44,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etBirthdate, etUsername, etPassword, etFirstName, etLastName;
+    EditText etBirthdate, etUsername, etPassword, etRepeat, etFirstName, etLastName;
+    TextView tvBirthdateValidation, tvUsernameValidation, tvPasswordValidation, tvRepeatValidation, tvNameValidation, tvLastNameValidation;
     DatePickerDialog picker;
     Button btnRegister;
     ImageButton imgBtnProfile;
@@ -60,6 +63,13 @@ public class RegisterActivity extends AppCompatActivity {
         etLastName = findViewById(R.id.etLastName);
         btnRegister = findViewById(R.id.btnRegister);
         imgBtnProfile = findViewById(R.id.btnProfilePhoto);
+        etRepeat = findViewById(R.id.etRepeatPassword);
+        tvBirthdateValidation = findViewById(R.id.tvBirthdateValidation);
+        tvUsernameValidation = findViewById(R.id.tvUsernameValidation);
+        tvPasswordValidation = findViewById(R.id.tvPasswordValidation);
+        tvRepeatValidation = findViewById(R.id.tvRepeatValidation);
+        tvNameValidation = findViewById(R.id.tvNameValidation);
+        tvLastNameValidation = findViewById(R.id.tvLastNameValidation);
 
         etBirthdate.setOnClickListener(view -> showDatePicker());
         btnRegister.setOnClickListener(view -> registerUser());
@@ -77,8 +87,55 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(){
-        byte[] image = getImageBytes();
-        uploadImage(image);
+        if(!emptyFields()){
+            byte[] image = getImageBytes();
+            uploadImage(image);
+        }
+    }
+
+    private boolean emptyFields(){
+        boolean flag = false;
+        if(etFirstName.getText().toString().isEmpty()){
+            tvNameValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvNameValidation.setVisibility(View.GONE);
+        }
+        if(etLastName.getText().toString().isEmpty()){
+            tvLastNameValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvLastNameValidation.setVisibility(View.GONE);
+        }
+        if(etUsername.getText().toString().isEmpty()){
+            tvUsernameValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvUsernameValidation.setVisibility(View.GONE);
+        }
+        if(etPassword.getText().toString().isEmpty()){
+            tvPasswordValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvPasswordValidation.setVisibility(View.GONE);
+        }
+        if(etRepeat.getText().toString().isEmpty()){
+            tvRepeatValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else if(!etPassword.getText().toString().equals(etRepeat.getText().toString())){
+            tvRepeatValidation.setVisibility(View.VISIBLE);
+            etRepeat.setText(getResources().getString(R.string.match));
+            flag = true;
+        }else{
+            tvRepeatValidation.setVisibility(View.GONE);
+        }
+        if(etBirthdate.getText().toString().isEmpty()){
+            tvBirthdateValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvBirthdateValidation.setVisibility(View.GONE);
+        }
+        return flag;
     }
 
     private byte[] getImageBytes(){

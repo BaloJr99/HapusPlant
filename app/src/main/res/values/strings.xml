@@ -27,4 +27,11 @@
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="match">The passwords doesn\'t match</string>
+    <string name="username_validation">Username is required</string>
+    <string name="password_validation">Password is required</string>
+    <string name="repeat_validation">Repeat Password is required</string>
+    <string name="name_validation">First Name is required</string>
+    <string name="lastname_validation">Last Name is required</string>
+    <string name="birthdate_validation">Birthday is required</string>
 </resources>
