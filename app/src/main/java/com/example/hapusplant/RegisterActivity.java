@@ -1,29 +1,37 @@
 package com.example.hapusplant;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
-import com.cloudinary.utils.ObjectUtils;
 import com.example.hapusplant.interfaces.ProfileAPI;
 import com.example.hapusplant.models.NewUser;
 import com.example.hapusplant.models.ProfileModel;
@@ -34,7 +42,6 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -50,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tvBirthdateValidation, tvUsernameValidation, tvPasswordValidation, tvRepeatValidation, tvNameValidation, tvLastNameValidation;
     DatePickerDialog picker;
     Button btnRegister;
-    ImageButton imgBtnProfile;
+    ImageView imgBtnProfile;
     String url = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +82,43 @@ public class RegisterActivity extends AppCompatActivity {
 
         etBirthdate.setOnClickListener(view -> showDatePicker());
         btnRegister.setOnClickListener(view -> registerUser());
+        imgBtnProfile.setOnClickListener(view -> takePicture());
     }
 
+    private void takePicture(){
+        if(!checkCameraPermission()){
+            requestCameraPermission();
+        }else {
+            PickImage();
+        }
+    }
+
+    private void PickImage(){
+        camaraLauncher.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
+    }
+
+    ActivityResultLauncher<Intent> camaraLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == RESULT_OK){
+                        Bundle extras = result.getData().getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        Drawable d = new BitmapDrawable(getResources(), imageBitmap);
+                        imgBtnProfile.setImageDrawable(d);
+                    }else{
+                        imgBtnProfile.setImageDrawable(ContextCompat.getDrawable(RegisterActivity.this, R.drawable.ic_camera));
+                    }
+                }
+            });
+
+    private void requestCameraPermission(){
+        requestPermissions(new String[]{ Manifest.permission.CAMERA }, 100);
+    }
+
+    private boolean checkCameraPermission(){
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
     private void showDatePicker(){
         final Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -228,4 +270,5 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
