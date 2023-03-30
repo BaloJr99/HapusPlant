@@ -2,6 +2,8 @@ package com.example.hapusplant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -88,8 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser(){
         if(!emptyFields()){
-            byte[] image = getImageBytes();
-            uploadImage(image);
+            if(imgBtnProfile.getDrawable().getConstantState().equals(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_camera)).getConstantState())) {
+                createUser("");
+            }else{
+                byte[] image = getImageBytes();
+                uploadImage(image);
+            }
         }
     }
 
@@ -124,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
             flag = true;
         }else if(!etPassword.getText().toString().equals(etRepeat.getText().toString())){
             tvRepeatValidation.setVisibility(View.VISIBLE);
-            etRepeat.setText(getResources().getString(R.string.match));
+            tvRepeatValidation.setText(getResources().getString(R.string.match));
             flag = true;
         }else{
             tvRepeatValidation.setVisibility(View.GONE);
@@ -181,47 +187,43 @@ public class RegisterActivity extends AppCompatActivity {
             Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.113:5154/")
                     .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-            if(url.isEmpty()){
-                Toast.makeText(this, "An error ocurred", Toast.LENGTH_SHORT).show();
-            }else {
-                ProfileAPI profileAPI = retrofit.create(ProfileAPI.class);
-                @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(etBirthdate.getText().toString()));
-                Call<Void> call = profileAPI.createUser(
-                        new NewUser(
-                                new ProfileModel("",
-                                        etFirstName.getText().toString(),
-                                        etLastName.getText().toString(),
-                                        url,
-                                        date
-                                ),
-                                new UserModel(
-                                        etUsername.getText().toString(),
-                                        etPassword.getText().toString(),
-                                        "user",
-                                        true)));
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                        try {
-                            if(response.isSuccessful()){
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                Toast.makeText(RegisterActivity.this, "Registered Succesfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }else {
-                                Toast.makeText(RegisterActivity.this, "A unexpected error occurred", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception ex){
-                            Toast.makeText(RegisterActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            ProfileAPI profileAPI = retrofit.create(ProfileAPI.class);
+            @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(etBirthdate.getText().toString()));
+            Call<Void> call = profileAPI.createUser(
+                    new NewUser(
+                            new ProfileModel("",
+                                    etFirstName.getText().toString(),
+                                    etLastName.getText().toString(),
+                                    url,
+                                    date
+                            ),
+                            new UserModel(
+                                    etUsername.getText().toString(),
+                                    etPassword.getText().toString(),
+                                    "user",
+                                    true)));
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                    try {
+                        if(response.isSuccessful()){
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(RegisterActivity.this, "Registered Succesfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }else {
+                            Toast.makeText(RegisterActivity.this, "A unexpected error occurred", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (Exception ex){
+                        Toast.makeText(RegisterActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                }
 
-                    @Override
-                    public void onFailure(@NonNull Call<Void> call, Throwable t) {
-                        Toast.makeText(RegisterActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                @Override
+                public void onFailure(@NonNull Call<Void> call, Throwable t) {
+                    Toast.makeText(RegisterActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (Exception ex){
             Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
         }
