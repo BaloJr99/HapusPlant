@@ -24,8 +24,7 @@ public class CollectionFragment extends Fragment {
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textCollection;
-        collectionViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 

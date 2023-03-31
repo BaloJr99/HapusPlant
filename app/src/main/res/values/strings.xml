@@ -34,4 +34,12 @@
     <string name="name_validation">First Name is required</string>
     <string name="lastname_validation">Last Name is required</string>
     <string name="birthdate_validation">Birthday is required</string>
+    <string name="register_succulent">Register Succulent</string>
+    <string name="family_name">Family Name</string>
+    <string name="family_verification">The family is required</string>
+    <string name="name">Name</string>
+    <string name="is_endemic">Is Endemic?</string>
+    <string name="has_pappers">Has Pappers?</string>
+    <string name="is_alive">Is Alive?</string>
+    <string name="succulent_image">Succulent Image</string>
 </resources>

@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     HapusPlantLiteDb hapusDb;
     Button btnLogin;
     EditText etUsername, etPassword;
-    TextView tvRegister, tvForgot;
+    TextView tvRegister, tvForgot, tvUsernameValidation, tvPasswordValidation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         tvForgot = findViewById(R.id.tvForgot);
         tvRegister = findViewById(R.id.tvRegister);
+        tvUsernameValidation = findViewById(R.id.tvUsernameValidation);
+        tvPasswordValidation = findViewById(R.id.tvPasswordValidation);
 
         btnLogin.setOnClickListener(view -> {
-            loginUser();
+            if(!emptyFields()){
+                loginUser();
+            }
         });
 
         tvForgot.setOnClickListener(view -> {
@@ -60,6 +66,23 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
+    }
+
+    private boolean emptyFields(){
+        boolean flag = false;
+        if(etUsername.getText().toString().isEmpty()){
+            tvUsernameValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvUsernameValidation.setVisibility(View.GONE);
+        }
+        if(etPassword.getText().toString().isEmpty()){
+            tvPasswordValidation.setVisibility(View.VISIBLE);
+            flag = true;
+        }else{
+            tvPasswordValidation.setVisibility(View.GONE);
+        }
+        return flag;
     }
 
     private void loginUser(){
