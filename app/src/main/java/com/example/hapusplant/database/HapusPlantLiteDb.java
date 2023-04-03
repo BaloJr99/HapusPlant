@@ -45,6 +45,7 @@ public class HapusPlantLiteDb extends SQLiteOpenHelper {
             DecodedJWT jwt = JWT.decode(token);
             if(jwt.getExpiresAt().before(new Date()))
                 token = "";
+            token = "X-Access-Token=" + token;
         }
         return token;
     }
