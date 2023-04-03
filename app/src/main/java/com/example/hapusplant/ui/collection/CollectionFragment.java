@@ -19,13 +19,8 @@ public class CollectionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        CollectionViewModel collectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
-
         binding = FragmentCollectionBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-
-        return root;
+        return binding.getRoot();
     }
 
     @Override

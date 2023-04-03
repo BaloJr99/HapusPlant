@@ -42,4 +42,5 @@
     <string name="has_pappers">Has Pappers?</string>
     <string name="is_alive">Is Alive?</string>
     <string name="succulent_image">Succulent Image</string>
+    <string name="my_collection">My Collection</string>
 </resources>

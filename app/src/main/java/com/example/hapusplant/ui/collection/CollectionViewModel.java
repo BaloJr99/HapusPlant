@@ -8,7 +8,7 @@ public class CollectionViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
     public CollectionViewModel() {
-        mText = new MutableLiveData<String>();
+        mText = new MutableLiveData<>();
         mText.setValue("This is a collection fragment");
     }
 
