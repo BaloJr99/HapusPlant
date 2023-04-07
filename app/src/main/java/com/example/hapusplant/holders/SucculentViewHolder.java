@@ -1,17 +1,25 @@
 package com.example.hapusplant.holders;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hapusplant.R;
+
 public class SucculentViewHolder extends RecyclerView.ViewHolder {
-    TextView txtNoticeTitle, txtNoticeBrief, txtNoticeFilePath;
+    public TextView tvSucculentName, tvSucculentFamilyName;
+    public Switch swSucculentEndemic, swSucculentPappers;
+    public ImageView ivSucculentPhoto;
 
     public SucculentViewHolder(View itemView) {
         super(itemView);
-        /*txtNoticeTitle =  itemView.findViewById(R.id.txt_notice_title);
-        txtNoticeBrief =  itemView.findViewById(R.id.txt_notice_brief);
-        txtNoticeFilePath =  itemView.findViewById(R.id.txt_notice_file_path);*/
+        tvSucculentName = itemView.findViewById(R.id.tvSucculentName);
+        tvSucculentFamilyName = itemView.findViewById(R.id.tvSucculentFamilyName);
+        swSucculentEndemic = itemView.findViewById(R.id.swSucculentEndemic);
+        swSucculentPappers = itemView.findViewById(R.id.swSucculentPappers);
+        ivSucculentPhoto = itemView.findViewById(R.id.ivSucculentPhoto);
     }
 }

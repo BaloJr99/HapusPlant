@@ -1,7 +1,22 @@
 package com.example.hapusplant.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class SucculentFamily {
-    private String idSucculentFamily, family, idUser;
+    @SerializedName("idSucculentFamily")
+    @Expose
+    private String idSucculentFamily;
+    @SerializedName("family")
+    @Expose
+    private String family;
+    @SerializedName("idUser")
+    @Expose
+    private String idUser;
+
+    public SucculentFamily(String family) {
+        this.family = family;
+    }
 
     public String getIdSucculentFamily() {
         return idSucculentFamily;

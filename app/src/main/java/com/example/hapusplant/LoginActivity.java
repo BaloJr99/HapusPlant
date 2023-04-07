@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.interfaces.UserAPI;
 import com.example.hapusplant.models.UserModel;
+import com.example.hapusplant.network.RetrofitInstance;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,10 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.113:5154/")
-                .addConverterFactory(GsonConverterFactory.create()).build();
-
-        UserAPI userAPI = retrofit.create(UserAPI.class);
+        UserAPI userAPI = RetrofitInstance.getRetrofitInstanceWithBuilder().create(UserAPI.class);
         Call<Void> call = userAPI.login(new UserModel(etUsername.getText().toString(), etPassword.getText().toString()));
         call.enqueue(new Callback<Void>() {
             @Override

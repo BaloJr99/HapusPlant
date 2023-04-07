@@ -43,4 +43,7 @@
     <string name="is_alive">Is Alive?</string>
     <string name="succulent_image">Succulent Image</string>
     <string name="my_collection">My Collection</string>
+    <string name="register_family">Register Family</string>
+    <string name="addSimbol">+</string>
+    <string name="add_button">Add button</string>
 </resources>

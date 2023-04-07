@@ -1,9 +1,47 @@
 package com.example.hapusplant.models;
 
-public class SucculentType {
-    private String idSucculent, kind, documentsLink, photoLink, idUser, idSucculentFamily;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private Boolean isEndemic, hasDocuments, isAlive;
+public class SucculentType {
+    @SerializedName("idSucculent")
+    @Expose
+    private String idSucculent;
+    @SerializedName("kind")
+    @Expose
+    private String kind;
+    @SerializedName("documentsLink")
+    @Expose
+    private String documentsLink;
+    @SerializedName("photoLink")
+    @Expose
+    private String photoLink;
+    @SerializedName("idUser")
+    @Expose
+    private String idUser;
+    @SerializedName("idSucculentFamily")
+    @Expose
+    private String idSucculentFamily;
+
+    @SerializedName("isEndemic")
+    @Expose
+    private Boolean isEndemic;
+    @SerializedName("hasDocuments")
+    @Expose
+    private Boolean hasDocuments;
+    @SerializedName("isAlive")
+    @Expose
+    private Boolean isAlive;
+
+    public SucculentType(String kind, String documentsLink, String photoLink, String idSucculentFamily, Boolean isEndemic, Boolean hasDocuments, Boolean isAlive) {
+        this.kind = kind;
+        this.documentsLink = documentsLink;
+        this.photoLink = photoLink;
+        this.idSucculentFamily = idSucculentFamily;
+        this.isEndemic = isEndemic;
+        this.hasDocuments = hasDocuments;
+        this.isAlive = isAlive;
+    }
 
     public String getIdSucculent() {
         return idSucculent;
