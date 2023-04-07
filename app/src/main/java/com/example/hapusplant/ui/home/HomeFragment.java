@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call<List<SucculentType>> call, @NonNull Response<List<SucculentType>> response) {
                 if(Objects.requireNonNull(response.body()).size() > 0){
                     binding.rvSucculents.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    SucculentAdapter adapter = new SucculentAdapter(response.body());
+                    SucculentAdapter adapter = new SucculentAdapter(response.body(), getContext());
                     binding.rvSucculents.setAdapter(adapter);
                 }
             }

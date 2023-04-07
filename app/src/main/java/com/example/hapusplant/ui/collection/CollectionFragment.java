@@ -86,7 +86,6 @@ public class CollectionFragment extends Fragment {
         binding.btnAddFamily.setOnClickListener(view -> registerFamilyDialog());
         binding.btnRegisterSucculent.setOnClickListener(view -> registerSucculent());
         binding.ivAddSucculent.setOnClickListener(view -> takePicture());
-        MediaManager.init(requireContext());
         fillSpinner();
 
         return binding.getRoot();

@@ -16,7 +16,7 @@
     <string name="dateformat">%1$d-%2$d-%3$d</string>
     <string name="succulentimage">succulentImage</string>
     <string name="prueba">Prueba</string>
-    <string name="isEndemic">IsEndemic?</string>
+    <string name="isEndemic">Is Endemic?</string>
     <string name="hasDocuments">Has Pappers?</string>
     <string name="edit_button">Edit Button</string>
     <string name="delete_button">Delete Button</string>
