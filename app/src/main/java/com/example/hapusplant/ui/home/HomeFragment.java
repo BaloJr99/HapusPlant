@@ -1,5 +1,6 @@
 package com.example.hapusplant.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.hapusplant.R;
+import com.example.hapusplant.SucculentKindForm;
 import com.example.hapusplant.adapters.SucculentAdapter;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.databinding.FragmentHomeBinding;
@@ -32,8 +34,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         binding.fab.setOnClickListener(this::moveToCollection);
@@ -43,8 +43,14 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllSuculents();
+    }
+
     private void moveToCollection(View view){
-        Navigation.findNavController(view).navigate(R.id.nav_collection);
+        startActivity(new Intent(getContext(), SucculentKindForm.class));
     }
 
     private void getAllSuculents(){

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
+import com.cloudinary.android.MediaManager;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -27,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MediaManager.init(this);
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

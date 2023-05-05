@@ -43,6 +43,18 @@ public class SucculentType {
         this.isAlive = isAlive;
     }
 
+    public SucculentType(String idSucculent, String kind, String documentsLink, String photoLink, String idSucculentFamily, Boolean isEndemic, Boolean hasDocuments, Boolean isAlive) {
+        this.idSucculent = idSucculent;
+        this.kind = kind;
+        this.documentsLink = documentsLink;
+        this.photoLink = photoLink;
+        this.idUser = idUser;
+        this.idSucculentFamily = idSucculentFamily;
+        this.isEndemic = isEndemic;
+        this.hasDocuments = hasDocuments;
+        this.isAlive = isAlive;
+    }
+
     public String getIdSucculent() {
         return idSucculent;
     }

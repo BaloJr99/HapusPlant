@@ -1,6 +1,7 @@
 package com.example.hapusplant.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.download.picasso.PicassoDownloadRequestBuilderFactory;
 import com.example.hapusplant.R;
+import com.example.hapusplant.SucculentKindForm;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.holders.SucculentViewHolder;
 import com.example.hapusplant.interfaces.SucculentFamilyAPI;
@@ -35,9 +37,6 @@ public class SucculentAdapter  extends RecyclerView.Adapter<SucculentViewHolder>
     Context c;
 
     public SucculentAdapter(List<SucculentType> dataList, Context c){
-        try {
-            MediaManager.init(c);
-        }catch (Exception ex){}
         this.dataList = dataList;
         this.c = c;
     }
@@ -73,7 +72,9 @@ public class SucculentAdapter  extends RecyclerView.Adapter<SucculentViewHolder>
         });
 
         holder.btnEdit.setOnClickListener(view -> {
-
+            Intent intent = new Intent(c, SucculentKindForm.class);
+            intent.putExtra("idSucculent", dataList.get(position).getIdSucculent());
+            c.startActivity(intent);
         });
 
         holder.btnDelete.setOnClickListener(view -> {
