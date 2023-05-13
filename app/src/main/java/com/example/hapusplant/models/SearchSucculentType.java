@@ -3,7 +3,7 @@ package com.example.hapusplant.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SucculentType {
+public class SearchSucculentType {
     @SerializedName("idSucculent")
     @Expose
     private String idSucculent;
@@ -19,9 +19,9 @@ public class SucculentType {
     @SerializedName("idUser")
     @Expose
     private String idUser;
-    @SerializedName("idSucculentFamily")
+    @SerializedName("succulentFamily")
     @Expose
-    private String idSucculentFamily;
+    private String succulentFamily;
 
     @SerializedName("isEndemic")
     @Expose
@@ -32,28 +32,6 @@ public class SucculentType {
     @SerializedName("isAlive")
     @Expose
     private Boolean isAlive;
-
-    public SucculentType(String kind, String documentsLink, String photoLink, String idSucculentFamily, Boolean isEndemic, Boolean hasDocuments, Boolean isAlive) {
-        this.kind = kind;
-        this.documentsLink = documentsLink;
-        this.photoLink = photoLink;
-        this.idSucculentFamily = idSucculentFamily;
-        this.isEndemic = isEndemic;
-        this.hasDocuments = hasDocuments;
-        this.isAlive = isAlive;
-    }
-
-    public SucculentType(String idSucculent, String kind, String documentsLink, String photoLink, String idSucculentFamily, Boolean isEndemic, Boolean hasDocuments, Boolean isAlive) {
-        this.idSucculent = idSucculent;
-        this.kind = kind;
-        this.documentsLink = documentsLink;
-        this.photoLink = photoLink;
-        this.idUser = idUser;
-        this.idSucculentFamily = idSucculentFamily;
-        this.isEndemic = isEndemic;
-        this.hasDocuments = hasDocuments;
-        this.isAlive = isAlive;
-    }
 
     public String getIdSucculent() {
         return idSucculent;
@@ -95,12 +73,12 @@ public class SucculentType {
         this.idUser = idUser;
     }
 
-    public String getIdSucculentFamily() {
-        return idSucculentFamily;
+    public String getSucculentFamily() {
+        return succulentFamily;
     }
 
-    public void setIdSucculentFamily(String idSucculentFamily) {
-        this.idSucculentFamily = idSucculentFamily;
+    public void setSucculentFamily(String succulentFamily) {
+        succulentFamily = succulentFamily;
     }
 
     public Boolean getEndemic() {
@@ -127,4 +105,3 @@ public class SucculentType {
         isAlive = alive;
     }
 }
-

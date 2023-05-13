@@ -21,6 +21,7 @@ import com.example.hapusplant.adapters.SucculentAdapter;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.databinding.FragmentHomeBinding;
 import com.example.hapusplant.interfaces.SucculentKindAPI;
+import com.example.hapusplant.models.SearchSucculentType;
 import com.example.hapusplant.models.SucculentType;
 import com.example.hapusplant.network.RetrofitInstance;
 
@@ -35,7 +36,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private SearchView searchView;
-    private List<SucculentType> succulentList;
+    private List<SearchSucculentType> succulentList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,10 +83,10 @@ public class HomeFragment extends Fragment {
         /* Get last known Token */
         HapusPlantLiteDb db = new HapusPlantLiteDb(getActivity());
         String token = db.getJwtIfExists();
-        Call<List<SucculentType>> call = kindAPI.getAllSucculents(token);
-        call.enqueue(new Callback<List<SucculentType>>() {
+        Call<List<SearchSucculentType>> call = kindAPI.getAllSucculents(token);
+        call.enqueue(new Callback<List<SearchSucculentType>>() {
             @Override
-            public void onResponse(@NonNull Call<List<SucculentType>> call, @NonNull Response<List<SucculentType>> response) {
+            public void onResponse(@NonNull Call<List<SearchSucculentType>> call, @NonNull Response<List<SearchSucculentType>> response) {
                 if(Objects.requireNonNull(response.body()).size() > 0){
                     binding.rvSucculents.setLayoutManager(new LinearLayoutManager(getActivity()));
                     succulentList = response.body();
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<SucculentType>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<SearchSucculentType>> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                 loadingDialog.dismissDialog();
             }
@@ -111,9 +112,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void filterList(String text){
-        List<SucculentType> filteredList = new ArrayList<>();
-        for (SucculentType succulent: succulentList) {
-            if(succulent.getKind().toLowerCase().contains(text.toLowerCase())){
+        List<SearchSucculentType> filteredList = new ArrayList<>();
+        for (SearchSucculentType succulent: succulentList) {
+            if(succulent.getSucculentFamily().concat(" ").concat(succulent.getKind()).toLowerCase().contains(text.toLowerCase())){
                 filteredList.add(succulent);
             }
         }
