@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.hapusplant.LoadingDialog;
 import com.example.hapusplant.R;
 import com.example.hapusplant.SucculentKindForm;
 import com.example.hapusplant.adapters.SucculentAdapter;
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         binding.fab.setOnClickListener(this::moveToCollection);
+        binding.fab.setImageTintMode(null);
+
         View root = binding.getRoot();
 
         getAllSuculents();
@@ -54,6 +57,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void getAllSuculents(){
+        LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.startLoagingDialog();
         SucculentKindAPI kindAPI = RetrofitInstance.getRetrofitInstance().create(SucculentKindAPI.class);
 
         /* Get last known Token */
@@ -68,11 +73,14 @@ public class HomeFragment extends Fragment {
                     SucculentAdapter adapter = new SucculentAdapter(response.body(), getContext());
                     binding.rvSucculents.setAdapter(adapter);
                 }
+
+                loadingDialog.dismissDialog();
             }
 
             @Override
             public void onFailure(@NonNull Call<List<SucculentType>> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissDialog();
             }
         });
     }

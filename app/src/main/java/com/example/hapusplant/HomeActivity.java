@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         DrawerLayout drawer = binding.drawerHome;
         NavigationView navigationView = binding.homeNav;
+        navigationView.setItemIconTintList(null);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(

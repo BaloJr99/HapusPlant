@@ -46,4 +46,5 @@
     <string name="register_family">Register Family</string>
     <string name="addSimbol">+</string>
     <string name="add_button">Add button</string>
+    <string name="loading">Loading...</string>
 </resources>

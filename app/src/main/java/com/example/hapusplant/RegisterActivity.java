@@ -35,6 +35,7 @@ import com.example.hapusplant.interfaces.ProfileAPI;
 import com.example.hapusplant.models.NewUser;
 import com.example.hapusplant.models.ProfileModel;
 import com.example.hapusplant.models.UserModel;
+import com.example.hapusplant.network.RetrofitInstance;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -224,9 +225,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void createUser(String url){
         try {
-            Gson gson = new GsonBuilder().registerTypeAdapter(String.class, new EmptyStringSerializer()).create();
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.113:5154/")
-                    .addConverterFactory(GsonConverterFactory.create(gson)).build();
+            Retrofit retrofit = RetrofitInstance.getRetrofitInstanceWithBuilder();
 
             ProfileAPI profileAPI = retrofit.create(ProfileAPI.class);
             @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(etBirthdate.getText().toString()));

@@ -152,7 +152,11 @@ public class SucculentKindForm extends AppCompatActivity {
 
             @Override
             public void onSuccess(String requestId, Map resultData) {
-                createSucculent(Objects.requireNonNull(resultData.get("public_id")).toString());
+                if(hasInfo){
+                    editSucculent(Objects.requireNonNull(resultData.get("public_id")).toString());
+                }else {
+                    createSucculent(Objects.requireNonNull(resultData.get("public_id")).toString());
+                }
             }
 
             @Override
