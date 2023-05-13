@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -23,6 +24,7 @@ import com.example.hapusplant.interfaces.SucculentKindAPI;
 import com.example.hapusplant.models.SucculentType;
 import com.example.hapusplant.network.RetrofitInstance;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,11 +34,27 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+    private SearchView searchView;
+    private List<SucculentType> succulentList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        searchView = binding.searchView;
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
+            }
+        });
         binding.fab.setOnClickListener(this::moveToCollection);
         binding.fab.setImageTintMode(null);
 
@@ -70,7 +88,8 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call<List<SucculentType>> call, @NonNull Response<List<SucculentType>> response) {
                 if(Objects.requireNonNull(response.body()).size() > 0){
                     binding.rvSucculents.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    SucculentAdapter adapter = new SucculentAdapter(response.body(), getContext());
+                    succulentList = response.body();
+                    SucculentAdapter adapter = new SucculentAdapter(succulentList, getContext());
                     binding.rvSucculents.setAdapter(adapter);
                 }
 
@@ -89,5 +108,24 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void filterList(String text){
+        List<SucculentType> filteredList = new ArrayList<>();
+        for (SucculentType succulent: succulentList) {
+            if(succulent.getKind().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(succulent);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext());
+            binding.rvSucculents.setAdapter(adapter);
+            Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
+        }else {
+            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext());
+            binding.rvSucculents.setAdapter(adapter);
+        }
+
     }
 }

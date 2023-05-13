@@ -6,9 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:queryHint="Search Here..."
+        android:background="@drawable/search_view_bg"
+        app:iconifiedByDefault="false"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSucculents"
         android:layout_width="match_parent"
+        android:layout_marginTop="65dp"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
