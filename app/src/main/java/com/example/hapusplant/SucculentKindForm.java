@@ -67,12 +67,16 @@ public class SucculentKindForm extends AppCompatActivity {
     Boolean hasInfo, imageChanged = false;
     String idSucculent;
     SucculentType succulentTypeToEdit;
+    LoadingDialog loadingDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_succulent_kind_form);
+
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoagingDialog();
 
         btnAddFamily = findViewById(R.id.btnAddFamily);
         btnRegisterSucculent = findViewById(R.id.btnRegisterSucculent);
@@ -115,6 +119,7 @@ public class SucculentKindForm extends AppCompatActivity {
     }
 
     private void registerSucculent(){
+        loadingDialog.startLoagingDialog();
         if(!emptyFields()){
             if(hasInfo){
                 if (imageChanged){
@@ -127,6 +132,8 @@ public class SucculentKindForm extends AppCompatActivity {
                 byte[] image = getImageBytes();
                 uploadImage(image);
             }
+        }else{
+            loadingDialog.dismissDialog();
         }
     }
 
@@ -157,11 +164,13 @@ public class SucculentKindForm extends AppCompatActivity {
                 }else {
                     createSucculent(Objects.requireNonNull(resultData.get("public_id")).toString());
                 }
+                loadingDialog.dismissDialog();
             }
 
             @Override
             public void onError(String requestId, ErrorInfo error) {
-                System.out.println("ERROR...");
+                System.out.println(error);
+                loadingDialog.dismissDialog();
             }
 
             @Override
@@ -172,6 +181,7 @@ public class SucculentKindForm extends AppCompatActivity {
     }
 
     private void addNewSucculentFamily(){
+        loadingDialog.startLoagingDialog();
         if(!emptyDialogFields()){
             SucculentFamilyAPI familyAPI = RetrofitInstance.getRetrofitInstance().create(SucculentFamilyAPI.class);
 
@@ -182,15 +192,19 @@ public class SucculentKindForm extends AppCompatActivity {
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                    loadingDialog.dismissDialog();
                     dialog.dismiss();
                     fillSpinner();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                    loadingDialog.dismissDialog();
                     Toast.makeText(SucculentKindForm.this, "An error ocurred", Toast.LENGTH_SHORT).show();
                 }
             });
+        }else{
+            loadingDialog.dismissDialog();
         }
     }
 
@@ -257,6 +271,8 @@ public class SucculentKindForm extends AppCompatActivity {
 
                     if(hasInfo){
                         fillForm(idSucculent);
+                    }else{
+                        loadingDialog.dismissDialog();
                     }
                 }
             }
@@ -334,15 +350,18 @@ public class SucculentKindForm extends AppCompatActivity {
                     } catch (Exception ex){
                         Toast.makeText(SucculentKindForm.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    loadingDialog.dismissDialog();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Void> call, Throwable t) {
                     Toast.makeText(SucculentKindForm.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismissDialog();
                 }
             });
         } catch (Exception ex){
             Toast.makeText(SucculentKindForm.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismissDialog();
         }
     }
 
@@ -376,15 +395,18 @@ public class SucculentKindForm extends AppCompatActivity {
                     } catch (Exception ex){
                         Toast.makeText(SucculentKindForm.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    loadingDialog.dismissDialog();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Void> call, Throwable t) {
                     Toast.makeText(SucculentKindForm.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismissDialog();
                 }
             });
         } catch (Exception ex){
             Toast.makeText(SucculentKindForm.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismissDialog();
         }
     }
 
@@ -393,7 +415,7 @@ public class SucculentKindForm extends AppCompatActivity {
         etName.setText("");
         swEndemic.setChecked(false);
         swPappers.setChecked(false);
-        swAlive.setChecked(false);
+        swAlive.setChecked(true);
     }
 
     private void fillForm(String idSucculent){
@@ -416,15 +438,17 @@ public class SucculentKindForm extends AppCompatActivity {
                     spFamily.setSelection(++index);
                     MediaManager.get().setDownloadRequestBuilderFactory(new PicassoDownloadRequestBuilderFactory());
                     MediaManager.get().download(SucculentKindForm.this).load(succulentTypeToEdit.getPhotoLink()).into(ivAddSucculent);
+                    loadingDialog.dismissDialog();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<SucculentType> call, @NonNull Throwable t) {
-
+                    loadingDialog.dismissDialog();
                 }
             });
         } catch (Exception ex){
             Toast.makeText(SucculentKindForm.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismissDialog();
         }
     }
 }

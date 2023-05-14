@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.hapusplant.LoadingDialog;
 import com.example.hapusplant.R;
@@ -26,6 +27,7 @@ import com.example.hapusplant.models.SucculentType;
 import com.example.hapusplant.network.RetrofitInstance;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,12 +39,18 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private SearchView searchView;
     private List<SearchSucculentType> succulentList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         searchView = binding.searchView;
+        swipeRefreshLayout = binding.swipeRefreshLayout;
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getAllSuculents();
+            swipeRefreshLayout.setRefreshing(false);
+        });
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -75,7 +83,7 @@ public class HomeFragment extends Fragment {
         startActivity(new Intent(getContext(), SucculentKindForm.class));
     }
 
-    private void getAllSuculents(){
+    public void getAllSuculents(){
         LoadingDialog loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoagingDialog();
         SucculentKindAPI kindAPI = RetrofitInstance.getRetrofitInstance().create(SucculentKindAPI.class);
@@ -87,11 +95,14 @@ public class HomeFragment extends Fragment {
         call.enqueue(new Callback<List<SearchSucculentType>>() {
             @Override
             public void onResponse(@NonNull Call<List<SearchSucculentType>> call, @NonNull Response<List<SearchSucculentType>> response) {
-                if(Objects.requireNonNull(response.body()).size() > 0){
-                    binding.rvSucculents.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    succulentList = response.body();
-                    SucculentAdapter adapter = new SucculentAdapter(succulentList, getContext());
-                    binding.rvSucculents.setAdapter(adapter);
+                if(response.body() != null){
+                    if(Objects.requireNonNull(response.body()).size() > 0){
+                        binding.rvSucculents.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        succulentList = response.body();
+                        succulentList.sort(Comparator.comparing(SearchSucculentType::getSucculentName));
+                        SucculentAdapter adapter = new SucculentAdapter(succulentList, getContext(), HomeFragment.this);
+                        binding.rvSucculents.setAdapter(adapter);
+                    }
                 }
 
                 loadingDialog.dismissDialog();
@@ -114,17 +125,17 @@ public class HomeFragment extends Fragment {
     private void filterList(String text){
         List<SearchSucculentType> filteredList = new ArrayList<>();
         for (SearchSucculentType succulent: succulentList) {
-            if(succulent.getSucculentFamily().concat(" ").concat(succulent.getKind()).toLowerCase().contains(text.toLowerCase())){
+            if(succulent.getSucculentName().toLowerCase().contains(text.toLowerCase())){
                 filteredList.add(succulent);
             }
         }
 
         if(filteredList.isEmpty()){
-            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext());
+            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext(), HomeFragment.this);
             binding.rvSucculents.setAdapter(adapter);
             Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
         }else {
-            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext());
+            SucculentAdapter adapter = new SucculentAdapter(filteredList, getContext(), HomeFragment.this);
             binding.rvSucculents.setAdapter(adapter);
         }
 

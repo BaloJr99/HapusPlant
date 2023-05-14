@@ -7,9 +7,6 @@ public class SearchSucculentType {
     @SerializedName("idSucculent")
     @Expose
     private String idSucculent;
-    @SerializedName("kind")
-    @Expose
-    private String kind;
     @SerializedName("documentsLink")
     @Expose
     private String documentsLink;
@@ -19,9 +16,9 @@ public class SearchSucculentType {
     @SerializedName("idUser")
     @Expose
     private String idUser;
-    @SerializedName("succulentFamily")
+    @SerializedName("succulentName")
     @Expose
-    private String succulentFamily;
+    private String succulentName;
 
     @SerializedName("isEndemic")
     @Expose
@@ -39,14 +36,6 @@ public class SearchSucculentType {
 
     public void setIdSucculent(String idSucculent) {
         this.idSucculent = idSucculent;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
     public String getDocumentsLink() {
@@ -73,12 +62,12 @@ public class SearchSucculentType {
         this.idUser = idUser;
     }
 
-    public String getSucculentFamily() {
-        return succulentFamily;
+    public String getSucculentName() {
+        return succulentName;
     }
 
-    public void setSucculentFamily(String succulentFamily) {
-        succulentFamily = succulentFamily;
+    public void setSucculentName(String succulentName) {
+        succulentName = succulentName;
     }
 
     public Boolean getEndemic() {

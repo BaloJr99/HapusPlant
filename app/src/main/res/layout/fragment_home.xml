@@ -16,14 +16,19 @@
         android:background="@drawable/search_view_bg"
         app:iconifiedByDefault="false"
         />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSucculents"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_marginTop="60dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSucculents"
+            android:layout_width="match_parent"
+            android:layout_marginTop="60dp"
+            android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
