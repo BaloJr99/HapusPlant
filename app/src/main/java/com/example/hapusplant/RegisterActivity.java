@@ -63,7 +63,13 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        MediaManager.init(this);
+        try {
+            if(MediaManager.get() == null){
+                MediaManager.init(this);
+            }
+        }catch (Exception ex){
+            MediaManager.init(this);
+        }
 
         etBirthdate = findViewById(R.id.etBirthdate);
         etUsername = findViewById(R.id.etUsername);

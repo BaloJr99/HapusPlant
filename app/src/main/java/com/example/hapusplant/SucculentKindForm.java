@@ -76,7 +76,7 @@ public class SucculentKindForm extends AppCompatActivity {
         setContentView(R.layout.activity_succulent_kind_form);
 
         loadingDialog = new LoadingDialog(this);
-        loadingDialog.startLoagingDialog();
+        loadingDialog.startLoadingDialog();
 
         btnAddFamily = findViewById(R.id.btnAddFamily);
         btnRegisterSucculent = findViewById(R.id.btnRegisterSucculent);
@@ -119,7 +119,7 @@ public class SucculentKindForm extends AppCompatActivity {
     }
 
     private void registerSucculent(){
-        loadingDialog.startLoagingDialog();
+        loadingDialog.startLoadingDialog();
         if(!emptyFields()){
             if(hasInfo){
                 if (imageChanged){
@@ -181,7 +181,7 @@ public class SucculentKindForm extends AppCompatActivity {
     }
 
     private void addNewSucculentFamily(){
-        loadingDialog.startLoagingDialog();
+        loadingDialog.startLoadingDialog();
         if(!emptyDialogFields()){
             SucculentFamilyAPI familyAPI = RetrofitInstance.getRetrofitInstance().create(SucculentFamilyAPI.class);
 

@@ -10,20 +10,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.hapusplant.LoadingDialog;
-import com.example.hapusplant.R;
 import com.example.hapusplant.SucculentKindForm;
 import com.example.hapusplant.adapters.SucculentAdapter;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.databinding.FragmentHomeBinding;
 import com.example.hapusplant.interfaces.SucculentKindAPI;
 import com.example.hapusplant.models.SearchSucculentType;
-import com.example.hapusplant.models.SucculentType;
 import com.example.hapusplant.network.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -47,6 +43,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         searchView = binding.searchView;
         swipeRefreshLayout = binding.swipeRefreshLayout;
+        succulentList = new ArrayList<>();
         swipeRefreshLayout.setOnRefreshListener(() -> {
             getAllSuculents();
             swipeRefreshLayout.setRefreshing(false);
@@ -60,7 +57,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterList(newText);
+                if(!succulentList.isEmpty()){
+                    filterList(newText);
+                }
                 return false;
             }
         });
@@ -85,7 +84,7 @@ public class HomeFragment extends Fragment {
 
     public void getAllSuculents(){
         LoadingDialog loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.startLoagingDialog();
+        loadingDialog.startLoadingDialog();
         SucculentKindAPI kindAPI = RetrofitInstance.getRetrofitInstance().create(SucculentKindAPI.class);
 
         /* Get last known Token */
