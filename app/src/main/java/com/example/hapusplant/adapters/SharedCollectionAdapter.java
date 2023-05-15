@@ -22,6 +22,7 @@ import com.example.hapusplant.SucculentKindForm;
 import com.example.hapusplant.database.HapusPlantLiteDb;
 import com.example.hapusplant.holders.SharedCollectionHolder;
 import com.example.hapusplant.holders.SucculentViewHolder;
+import com.example.hapusplant.interfaces.SharedContactsAPI;
 import com.example.hapusplant.interfaces.SucculentKindAPI;
 import com.example.hapusplant.models.SearchSucculentType;
 import com.example.hapusplant.models.SharedCollectionContacts;
@@ -54,6 +55,30 @@ public class SharedCollectionAdapter extends RecyclerView.Adapter<SharedCollecti
     @Override
     public void onBindViewHolder(@NonNull SharedCollectionHolder holder, int position) {
         holder.tvContactName.setText(dataList.get(position).getFullName());
+        holder.btnDeleteSharedCollection.setOnClickListener(view -> {
+            SharedContactsAPI contactsAPI = RetrofitInstance.getRetrofitInstance().create(SharedContactsAPI.class);
+
+            /* Get last known Token */
+            HapusPlantLiteDb db = new HapusPlantLiteDb(c);
+            String token = db.getJwtIfExists();
+            Call<Void> call = contactsAPI.deleteSharedContact(dataList.get(position).getIdUser(), token);
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    dataList.remove(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(c, "Delete Successfully", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(c, "Connection Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        });
     }
 
     @Override
