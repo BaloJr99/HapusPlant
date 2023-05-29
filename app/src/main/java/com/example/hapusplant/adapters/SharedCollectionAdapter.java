@@ -37,7 +37,7 @@ import retrofit2.Response;
 
 public class SharedCollectionAdapter extends RecyclerView.Adapter<SharedCollectionHolder> {
 
-    private List<SharedCollectionContacts> dataList;
+    private final List<SharedCollectionContacts> dataList;
     Context c;
 
     public SharedCollectionAdapter(List<SharedCollectionContacts> dataList, Context c){
@@ -79,6 +79,11 @@ public class SharedCollectionAdapter extends RecyclerView.Adapter<SharedCollecti
             });
 
         });
+
+        if(dataList.get(position).getPhoto() != null){
+            MediaManager.get().setDownloadRequestBuilderFactory(new PicassoDownloadRequestBuilderFactory());
+            MediaManager.get().download(c).load(dataList.get(position).getPhoto()).into(holder.ivProfilePhoto);
+        }
     }
 
     @Override

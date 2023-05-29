@@ -46,7 +46,7 @@ import retrofit2.Response;
 
 public class SucculentAdapter  extends RecyclerView.Adapter<SucculentViewHolder> {
 
-    private List<SearchSucculentType> dataList;
+    private final List<SearchSucculentType> dataList;
     Context c;
     HomeFragment home;
     ViewGroup parent;

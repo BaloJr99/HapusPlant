@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_collection, R.id.nav_profile, R.id.nav_close)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_collection, R.id.nav_wishlist, R.id.nav_profile, R.id.nav_close)
                 .setOpenableLayout(drawer)
                 .build();
         navigationView.getMenu().findItem(R.id.nav_close).setOnMenuItemClickListener(menuItem -> {

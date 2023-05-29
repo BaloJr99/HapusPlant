@@ -2,12 +2,14 @@ package com.example.hapusplant.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.hapusplant.LoginActivity;
 
 import java.util.Date;
 
@@ -21,8 +23,11 @@ public class HapusPlantLiteDb extends SQLiteOpenHelper {
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS user";
 
+    private final Context context;
+
     public HapusPlantLiteDb(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -47,6 +52,14 @@ public class HapusPlantLiteDb extends SQLiteOpenHelper {
                 token = "";
             token = "X-Access-Token=" + token;
         }
+
+        if(token.equals("X-Access-Token=") || token.isEmpty()){
+            sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
+            if (!(context instanceof LoginActivity)){
+                context.startActivity(new Intent(context, LoginActivity.class));
+            }
+        }
         return token;
     }
 
@@ -55,6 +68,7 @@ public class HapusPlantLiteDb extends SQLiteOpenHelper {
         Cursor c = sqLiteDatabase.query("user", null, null, null, null, null, null);
         if(c.getCount() > 0){
             sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
             ContentValues cv = new ContentValues();
             cv.put("jwtUser", token);
             sqLiteDatabase.insert("user", null, cv);

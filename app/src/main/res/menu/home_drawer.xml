@@ -19,6 +19,11 @@
         android:id="@+id/nav_collection"
         android:icon="@drawable/ic_collection"
         android:title="@string/other_s_collections" />
+
+    <item
+        android:id="@+id/nav_wishlist"
+        android:icon="@drawable/ic_star"
+        android:title="@string/my_wishlist" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"

@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_collection" />
 
     <fragment
+        android:id="@+id/nav_wishlist"
+        android:name="com.example.hapusplant.ui.wishlist.WishListFragment"
+        android:label="@string/my_wishlist"
+        tools:layout="@layout/fragment_wish_list" />
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.hapusplant.ui.profile.ProfileFragment"
         android:label="@string/profile"
