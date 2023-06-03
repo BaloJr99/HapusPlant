@@ -1,6 +1,7 @@
 package com.example.hapusplant.interfaces;
 
 import com.example.hapusplant.models.NewUser;
+import com.example.hapusplant.models.ProfileModel;
 import com.example.hapusplant.models.SharedCollectionContacts;
 import com.example.hapusplant.models.UserModel;
 
@@ -19,4 +20,7 @@ public interface ProfileAPI {
 
     @GET("Profile/GetMatchingUsers/{username}")
     Call<List<SharedCollectionContacts>> getMatchingUsername(@Path("username") String username, @Header("Cookie") String token);
+
+    @GET("Profile/GetProfile")
+    Call<ProfileModel> getProfileData(@Header("Cookie") String token);
 }

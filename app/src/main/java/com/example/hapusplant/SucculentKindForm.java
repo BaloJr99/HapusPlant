@@ -416,6 +416,7 @@ public class SucculentKindForm extends AppCompatActivity {
         swEndemic.setChecked(false);
         swPappers.setChecked(false);
         swAlive.setChecked(true);
+        ivAddSucculent.setImageResource(R.drawable.ic_camera);
     }
 
     private void fillForm(String idSucculent){

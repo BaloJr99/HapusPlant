@@ -19,4 +19,7 @@ public interface SharedContactsAPI {
 
     @DELETE("SharedCollection/DeleteSharedCollection/{idSharedUser}")
     Call<Void> deleteSharedContact(@Path("idSharedUser") String idSharedUser, @Header("Cookie") String token);
+
+    @POST("SharedCollection/AddSharedCollection/{idSharedUser}")
+    Call<Void> addNewSharedUser(@Path("idSharedUser") String idUser, @Header("Cookie") String token);
 }

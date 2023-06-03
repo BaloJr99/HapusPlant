@@ -110,8 +110,9 @@ public class LoadingDialog {
                                 listOfNotContacts.removeIf(x -> listIdOfContacts.contains(x.getIdUser()));
                                 RecyclerView rvSharedContacts = dialogView.findViewById(R.id.rvNotSharedCollection);
                                 rvSharedContacts.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
-                                SharedCollectionAdapter adapter = new SharedCollectionAdapter(listOfNotContacts, dialogView.getContext());
+                                SharedCollectionAdapter adapter = new SharedCollectionAdapter(listOfNotContacts, dialogView.getContext(), true);
                                 rvSharedContacts.setAdapter(adapter);
+                                startLoadingSharingContacts();
                             }
                         }
 
@@ -152,7 +153,7 @@ public class LoadingDialog {
                         listOfContacts = response.body();
                         RecyclerView rvSharedContacts = view.findViewById(R.id.rvSharedCollection);
                         rvSharedContacts.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                        SharedCollectionAdapter adapter = new SharedCollectionAdapter(response.body(), view.getContext());
+                        SharedCollectionAdapter adapter = new SharedCollectionAdapter(response.body(), view.getContext(), false);
                         rvSharedContacts.setAdapter(adapter);
                     }
                 }

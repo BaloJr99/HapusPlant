@@ -3,6 +3,8 @@ package com.example.hapusplant.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +41,12 @@ public class SharedCollectionAdapter extends RecyclerView.Adapter<SharedCollecti
 
     private final List<SharedCollectionContacts> dataList;
     Context c;
+    private boolean addingContact;
 
-    public SharedCollectionAdapter(List<SharedCollectionContacts> dataList, Context c){
+    public SharedCollectionAdapter(List<SharedCollectionContacts> dataList, Context c, boolean addingContact){
         this.dataList = dataList;
         this.c = c;
+        this.addingContact = addingContact;
     }
 
     @NonNull
@@ -55,30 +59,57 @@ public class SharedCollectionAdapter extends RecyclerView.Adapter<SharedCollecti
     @Override
     public void onBindViewHolder(@NonNull SharedCollectionHolder holder, int position) {
         holder.tvContactName.setText(dataList.get(position).getFullName());
-        holder.btnDeleteSharedCollection.setOnClickListener(view -> {
-            SharedContactsAPI contactsAPI = RetrofitInstance.getRetrofitInstance().create(SharedContactsAPI.class);
+        if(addingContact){
+            holder.btnDeleteSharedCollection.setImageResource(R.drawable.ic_add_contact);
+            holder.btnDeleteSharedCollection.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8DD604")));
+            holder.btnDeleteSharedCollection.setOnClickListener(view -> {
+                SharedContactsAPI contactsAPI = RetrofitInstance.getRetrofitInstance().create(SharedContactsAPI.class);
 
-            /* Get last known Token */
-            HapusPlantLiteDb db = new HapusPlantLiteDb(c);
-            String token = db.getJwtIfExists();
-            Call<Void> call = contactsAPI.deleteSharedContact(dataList.get(position).getIdUser(), token);
+                /* Get last known Token */
+                HapusPlantLiteDb db = new HapusPlantLiteDb(c);
+                String token = db.getJwtIfExists();
+                Call<Void> call = contactsAPI.addNewSharedUser(dataList.get(position).getIdUser(), token);
 
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    dataList.remove(position);
-                    notifyDataSetChanged();
-                    Toast.makeText(c, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        notifyDataSetChanged();
+                        Toast.makeText(c, "Added Successfully", Toast.LENGTH_SHORT).show();
 
-                }
+                    }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(c, "Connection Error", Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(c, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
+        }else {
+            holder.btnDeleteSharedCollection.setOnClickListener(view -> {
+                SharedContactsAPI contactsAPI = RetrofitInstance.getRetrofitInstance().create(SharedContactsAPI.class);
 
-        });
+                /* Get last known Token */
+                HapusPlantLiteDb db = new HapusPlantLiteDb(c);
+                String token = db.getJwtIfExists();
+                Call<Void> call = contactsAPI.deleteSharedContact(dataList.get(position).getIdUser(), token);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        dataList.remove(position);
+                        notifyDataSetChanged();
+                        Toast.makeText(c, "Delete Successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(c, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            });
+        }
 
         if(dataList.get(position).getPhoto() != null){
             MediaManager.get().setDownloadRequestBuilderFactory(new PicassoDownloadRequestBuilderFactory());

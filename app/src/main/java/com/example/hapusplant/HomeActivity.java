@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.download.picasso.PicassoDownloadRequestBuilderFactory;
 import com.example.hapusplant.database.HapusPlantLiteDb;
+import com.example.hapusplant.interfaces.ProfileAPI;
+import com.example.hapusplant.models.ProfileModel;
+import com.example.hapusplant.network.RetrofitInstance;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,6 +28,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hapusplant.databinding.ActivityHomeBinding;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -49,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
 
         DrawerLayout drawer = binding.drawerHome;
         NavigationView navigationView = binding.homeNav;
+        View headerLayout = navigationView.getHeaderView(0);
+        fillProfileData(headerLayout);
         navigationView.setItemIconTintList(null);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -90,5 +103,36 @@ public class HomeActivity extends AppCompatActivity {
             dialog.startLoadingSharingContacts();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fillProfileData(View v){
+        ImageView imageView = v.findViewById(R.id.ivProfileDrawerPhoto);
+        TextView textView = v.findViewById(R.id.tvNameProfile);
+        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+        ProfileAPI profileAPI = retrofit.create(ProfileAPI.class);
+
+        /* Get last known Token */
+        HapusPlantLiteDb db = new HapusPlantLiteDb(getApplicationContext());
+        String token = db.getJwtIfExists();
+
+        Call<ProfileModel> call = profileAPI.getProfileData(token);
+
+        call.enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                ProfileModel profileModel = response.body();
+                textView.setText(profileModel.getName() + " " + profileModel.getLastName());
+                if(profileModel.getPhoto() != null){
+                    MediaManager.get().setDownloadRequestBuilderFactory(new PicassoDownloadRequestBuilderFactory());
+                    MediaManager.get().download(HomeActivity.this).load(profileModel.getPhoto()).into(imageView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+
+            }
+        });
+        imageView.setImageResource(R.drawable.ic_profile);
     }
 }
